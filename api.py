@@ -11,6 +11,18 @@ import httpx
 from bs4 import BeautifulSoup
 
 app = FastAPI(title="The Stamp's Oracle API", version="15.5 - Hybrid Fallback Engine")
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+# เพิ่มโค้ด 6 บรรทัดนี้ลงไปครับบอส
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
