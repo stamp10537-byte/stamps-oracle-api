@@ -41,10 +41,15 @@ def save_db(data):
 # =========================================================
 # 🗄️ โซน 1: ระบบทำนาย BAPM (PostgreSQL) - โค้ดสมองกลของบอส
 # =========================================================
-DB_URI = "postgresql://postgres.ekwhfctojnjeglcyxxvh:StampLotto_DB_2026_Secure99@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
+# 1. ใส่ลิงก์ตรงๆ ใช้รหัสผ่านที่เราเพิ่งตั้ง (ไม่มี ? หรือ options ต่อท้ายลิงก์)
+DB_URI = "postgresql://postgres.ekwhfctojnjeglcyxxvh:StampLotto2026@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres"
 
 def get_db_connection(): 
-    return psycopg2.connect(DB_URI, client_encoding='utf8')
+    # 2. บังคับแก้บั๊ก Encoding ลงไปในฟังก์ชัน connect โดยตรง! (ท่านี้รอดแน่นอน)
+    return psycopg2.connect(
+        DB_URI,
+        options="-c client_encoding=utf8"
+    )
 def calculate_quant_scores(cur, prize_cond, num_sel, t_month, t_weekday, t_lunar, t_zodiac, cutoff_date, prize_mode):
     cutoff_str = cutoff_date.strftime('%Y-%m-%d')
     cur.execute(f"SELECT e.draw_date, e.day_of_week, e.month, e.zodiac_animal, e.lunar_phase_th, {num_sel} as number FROM draw_events e JOIN draw_results r ON e.id = r.draw_id WHERE {prize_cond} AND e.draw_date < '{cutoff_str}' ORDER BY e.draw_date DESC")
