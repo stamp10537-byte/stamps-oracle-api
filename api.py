@@ -41,14 +41,16 @@ def save_db(data):
 # =========================================================
 # 🗄️ โซน 1: ระบบทำนาย BAPM (PostgreSQL) - โค้ดสมองกลของบอส
 # =========================================================
-# 1. ใส่ลิงก์ตรงๆ ใช้รหัสผ่านที่เราเพิ่งตั้ง (ไม่มี ? หรือ options ต่อท้ายลิงก์)
-DB_URI = "postgresql://postgres.ekwhfctojnjeglcyxxvh:StampLotto2026@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres"
-
 def get_db_connection(): 
-    # 2. บังคับแก้บั๊ก Encoding ลงไปในฟังก์ชัน connect โดยตรง! (ท่านี้รอดแน่นอน)
+    # ท่าไม้ตาย: ส่งข้อมูลแยกทีละชิ้น ป้องกัน Python อ่านลิงก์เพี้ยน 100%
     return psycopg2.connect(
-        DB_URI,
-        options="-c client_encoding=utf8"
+        host="aws-1-ap-northeast-1.pooler.supabase.com",
+        port="6543",
+        database="postgres",
+        user="postgres.ekwhfctojnjeglcyxxvh",
+        password="StampLotto2026",  # ⚠️ บอสเช็กให้ชัวร์ว่าเป็นรหัสผ่านล่าสุดที่บอสตั้งไว้นะครับ
+        sslmode="require",
+        client_encoding="utf8"
     )
 def calculate_quant_scores(cur, prize_cond, num_sel, t_month, t_weekday, t_lunar, t_zodiac, cutoff_date, prize_mode):
     cutoff_str = cutoff_date.strftime('%Y-%m-%d')
