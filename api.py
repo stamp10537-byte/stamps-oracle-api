@@ -48,8 +48,7 @@ def save_db(data):
 # =========================================================
 # 💡 เปลี่ยนลิงก์เชื่อมต่อเป็น Supabase Session Pooler ของบอสแล้วครับ!
 # ⚠️ สำคัญมาก: ก่อนรันไฟล์นี้ บอสต้องลบคำว่า [YOUR-PASSWORD] รวมทั้งวงเล็บ [] ออก แล้วพิมพ์รหัสผ่านที่บอสตั้งไว้แทนนะครับ
-DB_URI = "postgresql://postgres.ekwhfctojnjeglcyxxvh:StampOracle2026@aws-1-ap-northeast-1.pooler.supabase.com:5432/postgres"
-
+DB_URI = "postgresql://postgres:StampOracle2026@db.ekwhfctojnjeglcyxxvh.supabase.co:5432/postgres"
 def get_db_connection(): return psycopg2.connect(DB_URI)
 
 def calculate_quant_scores(cur, prize_cond, num_sel, t_month, t_weekday, t_lunar, t_zodiac, cutoff_date, prize_mode):
