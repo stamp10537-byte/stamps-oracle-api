@@ -41,8 +41,10 @@ def save_db(data):
 # =========================================================
 # 🗄️ โซน 1: ระบบทำนาย BAPM (PostgreSQL) - โค้ดสมองกลของบอส
 # =========================================================
-# 1. ใช้ลิงก์ที่มี ?sslmode=require ต่อท้าย (สำคัญมาก ห้ามลบคำนี้นะครับ)
-postgresql://neondb_owner:npg_KfTm6c4HzldD@ep-orange-bird-a1u1lkwp-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+
+# ✅ แก้ไขแล้ว: ใส่ชื่อตัวแปร DB_URI และเครื่องหมายคำพูดครอบลิงก์ให้ถูกต้อง
+DB_URI = "postgresql://neondb_owner:npg_KfTm6c4HzldD@ep-orange-bird-a1u1lkwp-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+
 # 2. ปล่อยฟังก์ชันให้คลีนๆ แบบนี้เลยครับ
 def get_db_connection(): 
     return psycopg2.connect(DB_URI)
