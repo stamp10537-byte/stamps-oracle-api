@@ -41,9 +41,14 @@ def save_db(data):
 # =========================================================
 # 🗄️ โซน 1: ระบบทำนาย BAPM (PostgreSQL) - โค้ดสมองกลของบอส
 # =========================================================
-DB_URI = "postgresql://postgres:StampOracle2026@db.ekwhfctojnjeglcyxxvh.supabase.co:5432/postgres"
+DB_URI = "postgresql://postgres.ekwhfctojnjeglcyxxvh:StampOracle2026@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
 def get_db_connection(): 
-    return psycopg2.connect(DB_URI, client_encoding='utf8', connect_timeout=10)
+    # สั่งให้ Python ไม่ต้องรอถามเรื่อง Encoding จากเซิร์ฟเวอร์
+    return psycopg2.connect(
+        DB_URI, 
+        client_encoding='utf8',
+        options="-c client_encoding=utf8"
+    )
 def calculate_quant_scores(cur, prize_cond, num_sel, t_month, t_weekday, t_lunar, t_zodiac, cutoff_date, prize_mode):
     cutoff_str = cutoff_date.strftime('%Y-%m-%d')
     cur.execute(f"SELECT e.draw_date, e.day_of_week, e.month, e.zodiac_animal, e.lunar_phase_th, {num_sel} as number FROM draw_events e JOIN draw_results r ON e.id = r.draw_id WHERE {prize_cond} AND e.draw_date < '{cutoff_str}' ORDER BY e.draw_date DESC")
