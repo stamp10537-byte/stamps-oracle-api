@@ -42,7 +42,8 @@ def save_db(data):
 # 🗄️ โซน 1: ระบบทำนาย BAPM (PostgreSQL) - โค้ดสมองกลของบอส
 # =========================================================
 DB_URI = "postgresql://postgres.ekwhfctojnjeglcyxxvh:StampOracle2026@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?client_encoding=utf8"
-def get_db_connection(): return psycopg2.connect(DB_URI)
+def get_db_connection(): 
+    return psycopg2.connect(DB_URI, client_encoding='utf8')
 
 def calculate_quant_scores(cur, prize_cond, num_sel, t_month, t_weekday, t_lunar, t_zodiac, cutoff_date, prize_mode):
     cutoff_str = cutoff_date.strftime('%Y-%m-%d')
