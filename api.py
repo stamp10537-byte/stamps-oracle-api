@@ -42,11 +42,11 @@ def save_db(data):
 # 🗄️ โซน 1: ระบบทำนาย BAPM (PostgreSQL) - โค้ดสมองกลของบอส
 # =========================================================
 # 1. ใช้ลิงก์ที่มี ?sslmode=require ต่อท้าย (สำคัญมาก ห้ามลบคำนี้นะครับ)
-DB_URI = "postgresql://postgres.ekwhfctojnjeglcyxxvh:StampLotto2026@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres?sslmode=require"
-
+postgresql://neondb_owner:npg_KfTm6c4HzldD@ep-orange-bird-a1u1lkwp-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+# 2. ปล่อยฟังก์ชันให้คลีนๆ แบบนี้เลยครับ
 def get_db_connection(): 
-    # 2. ปล่อยว่างเลยครับ! ลบ client_encoding และออปชันต่างๆ ออกให้หมด
     return psycopg2.connect(DB_URI)
+
 def calculate_quant_scores(cur, prize_cond, num_sel, t_month, t_weekday, t_lunar, t_zodiac, cutoff_date, prize_mode):
     cutoff_str = cutoff_date.strftime('%Y-%m-%d')
     cur.execute(f"SELECT e.draw_date, e.day_of_week, e.month, e.zodiac_animal, e.lunar_phase_th, {num_sel} as number FROM draw_events e JOIN draw_results r ON e.id = r.draw_id WHERE {prize_cond} AND e.draw_date < '{cutoff_str}' ORDER BY e.draw_date DESC")
